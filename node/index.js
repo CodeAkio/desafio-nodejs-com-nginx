@@ -26,12 +26,12 @@ function createTablePeople(conn) {
 }
 
 function indexHandler(req, res) {
-  const insertUserQuery = `INSERT INTO people(name) VALUES('John Doo');`;
+  const insertUserQuery = `INSERT INTO people (name) VALUES('John Doo');`;
   conn.query(insertUserQuery);
 
   let htmlResponse = '<h1>Full Cycle</h1>';
 
-  const getAllUsersQuery = `SELECT id, name FROM people`;
+  const getAllUsersQuery = `SELECT * FROM people;`;
 
   conn.query(getAllUsersQuery, (error, people, _fields) => {
     if (error) {
@@ -42,11 +42,11 @@ function indexHandler(req, res) {
     htmlResponse += '<ul>';
 
     for (const person of people) {
-      table += `<li>#${person.id} - ${person.name}</li>`;
+      htmlResponse += `<li>#${person.id} - ${person.name}</li>`;
     }
 
     htmlResponse += '</ul>';
-  });
 
-  res.send(htmlResponse);
+    res.send(htmlResponse);
+  });
 }
